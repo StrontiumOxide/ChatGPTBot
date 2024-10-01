@@ -1,6 +1,7 @@
 import asyncio
 
 from aiogram import Bot
+from aiogram.exceptions import TelegramForbiddenError
 from random import choice
 from utils.config import active_people
 
@@ -13,22 +14,16 @@ async def spamming(bot: Bot) -> None:
     while True:
         await asyncio.sleep(sleeping)
 
-        advertising_phrases = [
-            "Ваш идеальный стиль начинается здесь!",
-            "Не упустите шанс изменить свою жизнь сегодня!",
-            "Качество, которое вы можете доверять!",
-            "Специальное предложение: только сегодня скидка 50%!",
-            "Откройте для себя мир возможностей с нашим продуктом!",
-            "Удобство и стиль в каждой детали!",
-            "Сделайте шаг к лучшему будущему вместе с нами!",
-            "Пока вы спите, мы работаем над вашим комфортом!",
-            "Ваше счастье — наша первоочередная задача!",
-            "Покупая у нас, вы инвестируете в качество!"
-        ]
-
         for user_id in active_people:
             count = active_people[user_id]['count']
-            await bot.send_message(
-                chat_id=user_id,
-                text=f'⚠️ <b>{choice(advertising_phrases)}</b> ⚠️\nКстати, вы уже обратились ко мне {count} раз(а)'
-            )
+#             try:
+#                 await bot.send_message(
+#                     chat_id=user_id,
+#                     text=f'⚠️ <b>{choice(advertising_phrases)}</b> ⚠️\nКстати, вы уже обратились ко мне {count} раз(а)'
+#                 )
+#             except TelegramForbiddenError:
+#                 del active_people[user_id]
+
+
+# async def cleaning_active(bot: Bot) -> None:
+#     """Функция по чистке активных людей"""

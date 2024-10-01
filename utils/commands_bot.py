@@ -1,6 +1,6 @@
 from aiogram import Bot
-from aiogram.types import BotCommand, BotCommandScopeDefault
-
+from aiogram.types import BotCommand, BotCommandScopeDefault, BotCommandScopeChat
+from utils.loader_token import Token
 
 async def set_commands(bot: Bot) -> None:
     """Данная функция добавляет меню в бота с командами ниже"""
@@ -15,9 +15,14 @@ async def set_commands(bot: Bot) -> None:
             description="Начать общение 💬"
         ),
         BotCommand(
+            command="get_id",
+            description="Узнать свой id 🆔"
+        ),
+        BotCommand(
             command="change_access",
             description="Изменить доступ ⚠️"
         )
     ]
 
-    await bot.set_my_commands(commands=commands, scope=BotCommandScopeDefault())
+    await bot.set_my_commands(commands=commands[:3], scope=BotCommandScopeDefault())
+    await bot.set_my_commands(commands=commands, scope=BotCommandScopeChat(chat_id=Token(key='MY_ID').find()))

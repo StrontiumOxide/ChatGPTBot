@@ -7,3 +7,17 @@ class DialogGPTState(StatesGroup):
     role = State()
     request = State()    
     history = State()
+
+
+class ChanheAsseccState(StatesGroup):
+    """Класс для хранения информации о пользователе"""
+
+    name = State()
+    user_id = State()
+
+
+class ChanheAsseccState_v2(StatesGroup):
+    """Класс для хранения информации о пользователе"""
+
+    name = State()
+     

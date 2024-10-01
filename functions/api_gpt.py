@@ -1,10 +1,10 @@
 import aiohttp
-import requests
+
 
 class ConnectGPT:
 
     """
-    Данный класс необходим к подключению сервера Чата GPT
+    Данный класс необходим для подключения к серверу ChatGPT
     """
 
     URL = r'https://ask.chadgpt.ru/api/public/gpt-4o-mini'

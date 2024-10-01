@@ -6,7 +6,8 @@ from time import time as timer
 from random import choice
 from main_logic_bot.greetings import kb_greetings as kb
 from utils.states import DialogGPTState
-from utils.config import gpt_active
+from utils.config import gpt_active, gpt_access
+from utils.loader_token import Token
 from functions.api_gpt import ConnectGPT
 
 from main_logic_bot.dialog_gpt import kb_dialog_gpt as kb
@@ -43,6 +44,13 @@ async def check_content(message: tp.Message, state: FSMContext) -> bool | None:
 @router.message(Command(commands=['start_conversation']))
 async def start_conversation_handler(message: tp.Message, state: FSMContext) -> None:
     """Функция по обработке команды /start_conversation"""
+
+    if message.from_user.id not in gpt_access:
+        await message.answer(
+            text='<b>У вас нет доступа!</b>'
+        )
+        return
+
 
     text = f'''
 ⚠️ <b>Начало диалога!</b> ⚠️
@@ -121,7 +129,7 @@ async def send_request(message: tp.Message, state: FSMContext) -> None:
     gpt_active.append(message.from_user.id)
 
         # Отправка запроса серверам ChatGPT
-    client = ConnectGPT(GPT_TOKEN='chad-007cca7c7747490093ce6f7958b050a3c3bbt0xn')
+    client = ConnectGPT(GPT_TOKEN=Token(key='GPT').find())
     response = await client.send_query_gpt(query=message.text, history=history)
 
     gpt_active.remove(message.from_user.id)
@@ -165,7 +173,7 @@ async def answer_user(message: tp.Message, state: FSMContext, query: str, respon
     text = f'''
 <b>Ответ на запрос 💠</b>
 
-<blockquote><pre>{response_text}</pre></blockquote>
+<blockquote><code>{response_text}</code></blockquote>
 
 <b>Время генерации ответа:</b> <i>{delta_time} секунд(ы) ⏳</i>
 '''

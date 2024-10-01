@@ -1,5 +1,6 @@
 from aiogram import Router, types as tp
 from aiogram.filters import CommandStart
+from aiogram.fsm.context import FSMContext
 from main_logic_bot.greetings import kb_greetings as kb
 from data.loader_file import load_file
 
@@ -7,9 +8,11 @@ router = Router(name='message_greetings')
 
 
 @router.message(CommandStart())
-async def start_handler(message: tp.Message) -> None:
+async def start_handler(message: tp.Message, state: FSMContext) -> None:
     """Функция по обработке команды /start"""
 
+    await state.clear()
+    
     text = f'''
 Привет, <b>{message.from_user.full_name}</b> 👋
 
