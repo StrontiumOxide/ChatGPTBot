@@ -8,6 +8,7 @@ from utils.loader_token import Token
 
 from main_logic_bot.main import main_polling
 from spam.main import spamming
+from asset_cleanup.main import cleaning
 
 logging.basicConfig(level=logging.INFO, filename='bot_log.log', filemode='a', encoding='utf-8')
 
@@ -30,7 +31,7 @@ async def main():
         # Сбор всех корутин
     await asyncio.gather(
         main_polling(bot=bot, dp=dp),
-        spamming(bot=bot)
+        cleaning()
     )
 
 

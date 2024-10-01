@@ -38,5 +38,8 @@ async def main_polling(bot: Bot, dp: Dispatcher) -> None:
         # Подключение командного меню
     await set_commands(bot=bot)
 
+        # Удаление вебхуков
+    await bot.delete_webhook(drop_pending_updates=True) 
+
         # Polling
     await dp.start_polling(bot, polling_timeout=20)

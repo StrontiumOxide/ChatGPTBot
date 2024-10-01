@@ -18,9 +18,26 @@ class CountMiddleware(BaseMiddleware):
         if user_id in active_people:
             active_people[user_id]['count'] += 1
         else:
-            active_people[user_id] = {'count': 1}
+            active_people[user_id] = {'count': 1, 'status': True}
 
             # Выполнение соответствующего хендлера
+        if active_people[user_id]['count'] > 100:
+            if active_people[user_id]['status']:
+                active_people[user_id]['status'] = False
+                text = f'''
+⚠️ <b>ВНИМАНИЕ</b> ⚠️
+
+<b>от API Telegram</b>
+<blockquote>Уважаемый, <b>{event.message.from_user.full_name}</b>❗️
+Вы превысили лимит по запросам 💭
+Повторите пожалуйста позже ⏳
+</blockquote>
+'''
+                await event.message.answer(
+                    text=text
+                )
+            return
+        
         await handler(event, data)
 
         return await super().__call__(handler, event, data)
