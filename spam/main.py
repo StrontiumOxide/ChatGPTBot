@@ -1,29 +1,26 @@
-import asyncio
-
 from aiogram import Bot
 from aiogram.exceptions import TelegramForbiddenError
-from random import choice
-from utils.config import active_people
+from random import randint
+from functions.api_gpt import ConnectGPT
+from utils.loader_token import Token
+from data.loader_file import load_file
 
-sleeping = 120
 
-
-async def spamming() -> None:
+async def spamming(bot: Bot) -> None:
     """Функция по периодической рассылке"""
 
-#     while True:
-#         await asyncio.sleep(sleeping)
+    query = 'Пожелай мне доброго утра, удачного дня и скажи я лучше всех. В конце напиши рандомный факт. Добавь соответствующие стикеры. Стикеры должны быть только в конце предложения.'
+    
+    client = ConnectGPT(GPT_TOKEN=Token(key='GPT').find())
+    response = await client.send_query_gpt(query=query)
 
-#         for user_id in active_people:
-#             count = active_people[user_id]['count']
-#             try:
-#                 await bot.send_message(
-#                     chat_id=user_id,
-#                     text=f'⚠️ <b>Ага</b> ⚠️\nКстати, вы уже обратились ко мне {count} раз(а)'
-#                 )
-#             except TelegramForbiddenError:
-#                 del active_people[user_id]
-
-
-# # async def cleaning_active(bot: Bot) -> None:
-# #     """Функция по чистке активных людей"""
+    number = randint(1,5)
+    await bot.send_photo(
+        chat_id=Token(key='MY_ID').find(),
+        photo=load_file(
+            category='photo/morning',
+            filename=f'{number}.jpg'
+        ),
+        caption=response.get('response', 'Ничего')
+    )
+    
