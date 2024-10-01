@@ -3,6 +3,7 @@ import logging
 
 from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
+from aiogram.exceptions import TelegramBadRequest
 from utils.loader_token import Token
 
 from main_logic_bot.main import main_polling
@@ -17,11 +18,14 @@ async def main():
     bot = Bot(token=Token(key='TELEGRAM').find(), parse_mode=ParseMode.HTML)
     dp = Dispatcher()
 
-        # Уведомление о запуске Telegram-бота
-    await bot.send_message(
-        chat_id=Token(key='MY_ID').find(),
-        text='<b>[INFO] Telegram-бот запущен!</b>'
-    )
+    try:
+            # Уведомление о запуске Telegram-бота
+        await bot.send_message(
+            chat_id=Token(key='MY_ID').find(),
+            text='<b>[INFO] Telegram-бот запущен!</b>'
+        )
+    except TelegramBadRequest:
+        print('[INFO] Telegram-бот запущен!')
 
         # Сбор всех корутин
     await asyncio.gather(

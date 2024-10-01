@@ -4,7 +4,7 @@ from aiogram import Bot
 from random import choice
 from utils.config import active_people
 
-sleeping = 30
+sleeping = 120
 
 
 async def spamming(bot: Bot) -> None:

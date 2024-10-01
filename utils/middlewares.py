@@ -25,3 +25,7 @@ class CountMiddleware(BaseMiddleware):
 
         return await super().__call__(handler, event, data)
     
+
+class CheckActiveMiddleware(BaseMiddleware):
+    """Middleware по контролю запросов к ChatGPT"""
+    

@@ -2,7 +2,8 @@ from aiogram import Bot, Dispatcher
 from utils.commands_bot import set_commands
 
 from utils.middlewares import CountMiddleware
-from main_logic_bot.greetings import message_greetings, callback_query_greetings
+from main_logic_bot.greetings import message_greetings
+from main_logic_bot.dialog_gpt import message_dialog_gpt
 
 
 async def main_polling(bot: Bot, dp: Dispatcher) -> None:
@@ -16,7 +17,9 @@ async def main_polling(bot: Bot, dp: Dispatcher) -> None:
 
             # Приветствие
         message_greetings,
-        callback_query_greetings,
+
+            # Диалог с ChatGPT
+        message_dialog_gpt,
 
     ]
 
