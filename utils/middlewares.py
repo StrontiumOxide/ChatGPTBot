@@ -1,7 +1,7 @@
 from typing import Any, Awaitable, Callable, Dict
 from aiogram import BaseMiddleware
-from aiogram.types import Update
-from utils.config import active_people
+from aiogram.types import TelegramObject, Update, Message
+from utils.config import active_people, gpt_active
 
 
 class CountMiddleware(BaseMiddleware):
@@ -28,4 +28,17 @@ class CountMiddleware(BaseMiddleware):
 
 class CheckActiveMiddleware(BaseMiddleware):
     """Middleware по контролю запросов к ChatGPT"""
+
+    async def __call__(self, handler: Callable[[TelegramObject, Dict[str, Any]], Awaitable[Any]], message: Message, data: Dict[str, Any]) -> Any:
+        
+        user_id = message.from_user.id
+
+        if user_id in gpt_active:
+            await message.reply(
+                text='<b>Подождите❗️</b>\n<i>ChatGPT ещё обрабатывает предыдущий запрос...</i>'
+            )
+        else:
+            await handler(message, data)
+        
+        return await super().__call__(handler, message, data)
     

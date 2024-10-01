@@ -12,6 +12,9 @@ ChatGPTBot — это инновационный Telegram-бот, который
 
 ## "Commits"
 
+### Created limit gpt
+- Создание CheckActiveMiddleware для ограничения запросов к ChatGPT.
+
 ### Created DialogGPT
 - Создание рабочего диалога с ChatGPT.
 - Создание соответствующи кнопок.

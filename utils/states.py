@@ -7,4 +7,3 @@ class DialogGPTState(StatesGroup):
     role = State()
     request = State()    
     history = State()
-    

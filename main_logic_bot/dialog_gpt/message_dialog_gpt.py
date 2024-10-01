@@ -6,6 +6,7 @@ from time import time as timer
 from random import choice
 from main_logic_bot.greetings import kb_greetings as kb
 from utils.states import DialogGPTState
+from utils.config import gpt_active
 from functions.api_gpt import ConnectGPT
 
 from main_logic_bot.dialog_gpt import kb_dialog_gpt as kb
@@ -117,11 +118,13 @@ async def send_request(message: tp.Message, state: FSMContext) -> None:
     )
 
     start_time = timer()
+    gpt_active.append(message.from_user.id)
 
         # Отправка запроса серверам ChatGPT
     client = ConnectGPT(GPT_TOKEN='chad-007cca7c7747490093ce6f7958b050a3c3bbt0xn')
     response = await client.send_query_gpt(query=message.text, history=history)
 
+    gpt_active.remove(message.from_user.id)
     delta_time = round(timer() - start_time, 2)  
 
     await answer_user(

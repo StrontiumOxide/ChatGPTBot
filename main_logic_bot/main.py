@@ -1,7 +1,7 @@
 from aiogram import Bot, Dispatcher
 from utils.commands_bot import set_commands
 
-from utils.middlewares import CountMiddleware
+from utils.middlewares import CountMiddleware, CheckActiveMiddleware
 from main_logic_bot.greetings import message_greetings
 from main_logic_bot.dialog_gpt import message_dialog_gpt
 
@@ -11,6 +11,7 @@ async def main_polling(bot: Bot, dp: Dispatcher) -> None:
 
         # Подключение Middleware
     dp.update.middleware(CountMiddleware())
+    dp.message.middleware(CheckActiveMiddleware())
 
         # Список с модулями Telegram-бота
     list_modules = [
