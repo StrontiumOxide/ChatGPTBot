@@ -11,9 +11,10 @@ class CountMiddleware(BaseMiddleware):
         
         if event.message:
             user_id = event.message.from_user.id
-
         elif event.callback_query:
             user_id = event.callback_query.from_user.id
+        else:
+            return
 
         if user_id in active_people:
             active_people[user_id]['count'] += 1
@@ -21,7 +22,7 @@ class CountMiddleware(BaseMiddleware):
             active_people[user_id] = {'count': 1, 'status': True}
 
             # Выполнение соответствующего хендлера
-        if active_people[user_id]['count'] > 100:
+        if active_people[user_id]['count'] > 50:
             if active_people[user_id]['status']:
                 active_people[user_id]['status'] = False
                 text = f'''

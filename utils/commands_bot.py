@@ -2,6 +2,7 @@ from aiogram import Bot
 from aiogram.types import BotCommand, BotCommandScopeDefault, BotCommandScopeChat
 from utils.loader_token import Token
 
+
 async def set_commands(bot: Bot) -> None:
     """Данная функция добавляет меню в бота с командами ниже"""
 
@@ -21,6 +22,10 @@ async def set_commands(bot: Bot) -> None:
         BotCommand(
             command="change_access",
             description="Изменить доступ ⚠️"
+        ),
+        BotCommand(
+            command="unload_log",
+            description="Выгрузить log 📋"
         )
     ]
 

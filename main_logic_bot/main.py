@@ -6,6 +6,7 @@ from main_logic_bot.greetings import message_greetings
 from main_logic_bot.dialog_gpt import message_dialog_gpt
 from main_logic_bot.change_access import message_change_access, callback_query_change_access
 from main_logic_bot.get_id import message_get_id
+from main_logic_bot.unload_log import message_unload
 
 
 async def main_polling(bot: Bot, dp: Dispatcher) -> None:
@@ -29,7 +30,10 @@ async def main_polling(bot: Bot, dp: Dispatcher) -> None:
         callback_query_change_access,
 
             # Получение своего id
-        message_get_id
+        message_get_id,
+
+            # Выгрузка log
+        message_unload
     ]
 
         # Подключение модулей

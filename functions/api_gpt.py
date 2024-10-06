@@ -10,8 +10,8 @@ class ConnectGPT:
     URL = r'https://ask.chadgpt.ru/api/public/gpt-4o-mini'
 
 
-    def __init__(self, GPT_TOKEN: str) -> None:
-        self.GPT_TOKEN = GPT_TOKEN
+    def __init__(self, gpt_token: str) -> None:
+        self.GPT_TOKEN = gpt_token
 
 
     async def send_query_gpt(self, query: str, history: list[dict] = []) -> dict | None:

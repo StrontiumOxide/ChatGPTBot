@@ -12,5 +12,5 @@ async def get_id_handler(message: tp.Message, state: FSMContext) -> None:
     await state.clear()
     
     await message.answer(
-        text=f'Ваш id: <b><code>{message.from_user.id}</code></b>'
+        text=f'<b>Ваш id:</b> <code>{message.from_user.id}</code> 🆔'
     )

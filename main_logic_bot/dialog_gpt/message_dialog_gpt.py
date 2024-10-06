@@ -129,7 +129,7 @@ async def send_request(message: tp.Message, state: FSMContext) -> None:
     gpt_active.append(message.from_user.id)
 
         # Отправка запроса серверам ChatGPT
-    client = ConnectGPT(GPT_TOKEN=Token(key='GPT').find())
+    client = ConnectGPT(gpt_token=Token(key='GPT').find())
     response = await client.send_query_gpt(query=message.text, history=history)
 
     gpt_active.remove(message.from_user.id)
@@ -169,11 +169,11 @@ async def answer_user(message: tp.Message, state: FSMContext, query: str, respon
 Код: {response.get('error_code')}
 Сообшение: {response.get('error_message')}
 Попробуйте ввести другой запрос 😉'''
-
+        
     text = f'''
 <b>Ответ на запрос 💠</b>
 
-<blockquote><code>{response_text}</code></blockquote>
+<blockquote><span class="tg-spoiler">{response_text}</span></blockquote>
 
 <b>Время генерации ответа:</b> <i>{delta_time} секунд(ы) ⏳</i>
 '''
