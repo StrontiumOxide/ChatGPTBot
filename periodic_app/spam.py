@@ -34,7 +34,6 @@ async def spamer(bot: Bot, time: str) -> None:
     elif time == 'night':
         query = query_night
     
-
     client = ConnectGPT(gpt_token=Token(key='GPT').find())
     response = await client.send_query_gpt(query=query)
 

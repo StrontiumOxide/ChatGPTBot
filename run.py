@@ -9,7 +9,7 @@ from utils.loader_token import Token
 from main_logic_bot.main import main_polling
 from periodic_app.main import planned_machine
 
-# logging.basicConfig(level=logging.ERROR, filename='bot_log.log', filemode='a', encoding='utf-8')
+logging.basicConfig(level=logging.ERROR, filename='bot_log.log', filemode='a', encoding='utf-8')
 
 
 async def main():
